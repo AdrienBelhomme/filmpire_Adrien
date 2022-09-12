@@ -31,6 +31,7 @@ export default makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
+    marginTop: '81px',
   },
   linkButton: {
     '&:hover': {
