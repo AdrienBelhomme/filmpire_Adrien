@@ -101,7 +101,9 @@ const NavBar = () => {
               }}
 
             >
-              <SideBar setMobileOpen={setMobileOpen} />
+              <SideBar
+                setMobileOpen={setMobileOpen}
+              />
             </Drawer>
           ) : (
             <Drawer classes={{ paper: classes.drawerPaper }} variant="permanent" open>

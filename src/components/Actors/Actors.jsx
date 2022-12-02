@@ -2,17 +2,25 @@ import React from 'react';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import { Modal, Typography, Button, ButtonGroup, Grid, Box, CircularProgress, useMediaQuery, Rating } from '@mui/material';
 import { useGetActorQuery, useGetActorMoviesQuery } from '../../services/TMDB';
-import MovieList from '../MovieList/MovieList';
+import ActorMoviesList from '../ActorMoviesList/ActorMoviesList';
 
 const Actors = () => {
   const { id } = useParams();
 
   const { data } = useGetActorQuery(id);
-  const { data: allMovies } = useGetActorMoviesQuery(id);
+  const { data: allMovies, isFetching } = useGetActorMoviesQuery(id);
+
+  if (isFetching) {
+    return (
+      <Box>
+        <CircularProgress size="8rem" />
+      </Box>
+    );
+  }
 
   const navigate = useHistory();
 
-  console.log(allMovies);
+  console.log(data);
 
   return (
     <div>
@@ -23,7 +31,13 @@ const Actors = () => {
         Age : {2022 - data?.birthday?.split('-')[0]}
       </Typography>
       <Typography>
-        {data?.place_of_birth}
+        {data?.place_of_birth || 'Sorry, not indicated'}
+      </Typography>
+      <Typography>
+        <Link target="_blank" rel="noreferrer" to={`//www.imdb.com/name/${data?.imdb_id}`}>
+          IMDB
+        </Link>
+
       </Typography>
 
       <img src={`https://www.themoviedb.org/t/p/w300/${data?.profile_path}`} />
@@ -32,10 +46,10 @@ const Actors = () => {
 
       <Box marginTop="5rem" width="100%">
         <Typography variant="h3" gutterBottom align="center">
-          You might also like
+          Other movies
         </Typography>
         {allMovies ? (
-          <MovieList movies={allMovies.cast} numberOfMovies={12} />
+          <ActorMoviesList movies={allMovies.cast} numberOfMovies={12} />
         ) : (
           <Box>Sorry, nothing was found.</Box>
         )}

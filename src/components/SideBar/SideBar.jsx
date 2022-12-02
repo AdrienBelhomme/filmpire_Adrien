@@ -42,7 +42,7 @@ const SideBar = ({ setMobileOpen }) => {
   }
 
   return (
-    <>
+    <div style={{ paddingBottom: '50%' }}>
       <Link to="/" className={classes.imageLink}>
         <img
           className={classes.image}
@@ -82,7 +82,7 @@ const SideBar = ({ setMobileOpen }) => {
           </Link>
         ))}
       </List>
-    </>
+    </div>
   );
 };
 export default SideBar;
